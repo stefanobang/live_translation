@@ -9,9 +9,6 @@ SAMPLE_RATE = 48000              # [Hz]. sampling rate.
 RECORD_SEC = 12                  # [sec]. duration recording audio.
 
 
-#https://github.com/tez3998/loopback-capture-sample/blob/master/capture.py
-#https://github.com/JohnZolton/scribe
-
 #system sound capture
 def record(conn):
     OUTPUT_FILE_NAME = "out.wav"    # file name.
