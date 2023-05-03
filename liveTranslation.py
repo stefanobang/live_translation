@@ -163,3 +163,5 @@ if __name__ == "__main__":
         korean_record()
     else:
         print("error")
+
+        #fux
