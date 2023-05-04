@@ -4,6 +4,8 @@ import whisper
 import multiprocessing as mp
 import time
 
+from tkinter import *
+
 OUTPUT_FILE_NAME = "out.wav"    # file name.
 SAMPLE_RATE = 48000              # [Hz]. sampling rate.
 RECORD_SEC = 12                  # [sec]. duration recording audio.
@@ -43,15 +45,15 @@ def record(conn):
     except KeyboardInterrupt:
         print("interrupted")
     
-def decode(conn, start_time, x):
+def decode(conn, start_time, inputVer):
     try:
         while True:
             model = whisper.load_model("base")
-            if(x == 0):
+            if(inputVer == 0):
                 model = whisper.load_model("base")
-            elif(x == 1):
+            elif(inputVer == 1):
                 model = whisper.load_model("medium")
-            elif(x == 2):
+            elif(inputVer == 2):
                 model = whisper.load_model("large")
 
             while True:
@@ -73,8 +75,9 @@ def decode(conn, start_time, x):
 
             end_time = time.time() #time ends
             #prevent spamming short text or short decode time
-            #if(end_time - prevent_spamTime <= 0.15 or len(translated_result.text)<=5):
-             #   continue
+            if(end_time - prevent_spamTime <= 0.15 or len(translated_result.text)<=5):
+                continue
+
             print(end_time - prevent_spamTime)
             print("time : ", end_time - start_time) #prints total time
             print("번역문: \n"+translated_result.text)
@@ -84,6 +87,9 @@ def decode(conn, start_time, x):
         print("interrupted")
     
 def korean_record():
+    print("start translation!")
+    start_time = time.time() #start time
+
     model = whisper.load_model("large") #한글 번역은 large 이하면 번역 기대하면 안됌
 
     try:
@@ -105,27 +111,97 @@ def korean_record():
 
                 end_time = time.time() #time ends
                 print("time : ", end_time - start_time) #prints total time
-                print("번역문: "+translated_result.text)
+                print("번역문: \n"+translated_result.text)
                 print("----------------------------------\n")
 
     except KeyboardInterrupt:
         print("interrupted")
 
 
+def enButton():
+    print("enButton")
+    
+    print("Current ver: "+ str (inputType.get()))
+    
+    inputVer = inputType.get() #temp
+    print("start translation!")
+    start_time = time.time() #start time
+    
+    to_record, to_decode = mp.Pipe()
+    record_sound = mp.Process(target=record,args = (to_decode,))
+    decode_audio = mp.Process(target=decode, args = (to_record, start_time, inputVer))
+
+    record_sound.start()
+    decode_audio.start()
+
+    record_sound.join()
+    decode_audio.join()
+
+    
+
+
+
+
+    # if(y == '1'):
+    #     #record()
+    #     #https://docs.python.org/3/library/multiprocessing.html
+    #     #use multiproccessing to improve performance
+    #     #model isnt meanth to multi so no choice but to declare for each process
+    #     to_record, to_decode = mp.Pipe()
+    #     record_sound = mp.Process(target=record,args = (to_decode,))
+    #     decode_audio = mp.Process(target=decode, args = (to_record, start_time, x))
+
+    #     record_sound.start()
+    #     decode_audio.start()
+
+    #     record_sound.join()
+    #     decode_audio.join()
+    # elif(y == '2'):
+    #     korean_record()
+    # else:
+    #     print("error")
+
+        #fux
 
 
 
 if __name__ == "__main__":
-    print("아직 한글은 고퀄 번역은 힘들고 빠른 음성인 경오 오류가 매우 큼니다. 빠른 음성은 영어 번역 사용해주세요")
-    #will be replaced to button
-    print("Enter model 0 = base, 1 = medium, 2 = large (default is base and it is only of en): ")
-    x = input()
+    whenPressed  = False
+    
+    #gui
+    mainWin = Tk()
+    mainWin.geometry("500x400")
+    mainWin.title("liveTranslation")
 
-    print("영문으로 번역: 1, 한글: 2 ")#지울 예정
-    y = input()
+    label1 = Label(mainWin, text = "아직 한글은 고퀄 번역은 힘들고 빠른 음성인 경우 오류가 매우 큼니다. \n빠른 음성은 영어 번역 사용해주세요")
+    label2 = Label(mainWin, text = "\n영어로 버튼시 하나 고른뒤 버튼 클릭해주세요")
 
-    print("start translation!")
-    start_time = time.time() #start time
+    inputType = IntVar() #자료형 지정
+    radiobtnSmall = Radiobutton(mainWin, text="Base", value = 0, variable=inputType)
+    radiobtnSmall.select()
+    radiobtnMedium = Radiobutton(mainWin, text="Medium", value = 1, variable=inputType)
+    radiobtnLarge = Radiobutton(mainWin, text="Large", value = 2, variable=inputType)
+
+ 
+    
+    btnKR = Button (mainWin, command = korean_record, text ="Translate to Korean(한글로 번역)")
+    btnEn = Button (mainWin, command = enButton, text ="Translate to English")
+    btnKR_improved = Button (text ="고속한글 번역(추가예정)")
+    
+
+
+    label1.pack()
+    btnKR.pack()
+    label2.pack()
+    
+    radiobtnSmall.pack()
+    radiobtnMedium.pack()
+    radiobtnLarge.pack()
+    btnEn.pack()
+
+    btnKR_improved.pack()
+ 
+    mainWin.mainloop()
 
 
     #https://docs.python.org/3/library/multiprocessing.html
@@ -140,25 +216,3 @@ if __name__ == "__main__":
 
     # record_sound.join()
     # decode_audio.join()
-
-    print(y)
-    if(y == '1'):
-        #record()
-        #https://docs.python.org/3/library/multiprocessing.html
-        #use multiproccessing to improve performance
-        #model isnt meanth to multi so no choice but to declare for each process
-        to_record, to_decode = mp.Pipe()
-        record_sound = mp.Process(target=record,args = (to_decode,))
-        decode_audio = mp.Process(target=decode, args = (to_record, start_time, x))
-
-        record_sound.start()
-        decode_audio.start()
-
-        record_sound.join()
-        decode_audio.join()
-    elif(y == '2'):
-        korean_record()
-    else:
-        print("error")
-
-        #fux
