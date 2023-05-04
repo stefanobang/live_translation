@@ -203,7 +203,7 @@ if __name__ == "__main__":
  
     mainWin.mainloop()
 
-
+#dd
     #https://docs.python.org/3/library/multiprocessing.html
     #멀티로 하니 영어 번역 쿼리티는 좋아 졌지만 한국어 떡락
     #한국어는 트레딩하면 ㄴㄴ
