@@ -3,8 +3,12 @@ import soundfile as sf
 import whisper
 import time
 import multiprocessing as mp
-import sys
+import sys 
 import re
+from os import system
+
+name = "English Translation"
+system("title "+name)
 
 value_str = sys.argv[1]
 inputType = int(value_str)
@@ -68,8 +72,8 @@ def decode(conn, start_time, inputVer):
                 continue
 
             new_translated_result = re.sub(r"\.", ".\n", translated_result.text)
-            print(f"Time it took to decode: {round(end_time - prevent_spamTime,3)} secs")
-            print(f"time : {round(end_time - start_time,3)}sec ") #prints total time
+            print(f"Decode time: {round(end_time - prevent_spamTime,3)} secs")
+            print(f"Time : {round(end_time - start_time,3)}sec ") #prints total time
             print("번역문: \n"+new_translated_result)
             print("----------------------------------\n")
                 
