@@ -3,6 +3,10 @@ import soundfile as sf
 import whisper
 import time
 import re
+from os import system
+
+name = "Korean Translation"
+system("title "+name)
 
 OUTPUT_FILE_NAME = "out.wav"    # file name.
 SAMPLE_RATE = 48000              # [Hz]. sampling rate.
@@ -36,7 +40,9 @@ try:
 
             end_time = time.time() #time ends
             #prevent spamming short text or short decode time
-            if(end_time - prevent_spamTime <= 1 or len(translated_result.text)<=5):
+            if(end_time - prevent_spamTime <= 1.1 or len(translated_result.text)<=5):
+                continue
+            if(translated_result.text == "MBC 뉴스 김수진입니다."):
                 continue
 
 
