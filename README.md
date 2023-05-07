@@ -6,8 +6,8 @@
 <summary>Preview</summary>
     <p align="center">
         <img src="https://github.com/stefanobang/live_translation/blob/master/assets/Example1.png" width="400" height="500"> 
-        <img src="https://github.com/stefanobang/live_translation/blob/master/assets/Example2.png" width="700" height="500">
-        <img src="https://github.com/stefanobang/live_translation/blob/master/assets/Example3.png" width="700" height="500">
+        <img src="https://github.com/stefanobang/live_translation/blob/master/assets/Example2.png" width="700" height="400">
+        <img src="https://github.com/stefanobang/live_translation/blob/master/assets/Example3.png" width="700" height="400">
     </p>
 
 ## Pre-requirments
