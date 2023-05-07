@@ -13,7 +13,7 @@ SAMPLE_RATE = 48000              # [Hz]. sampling rate.
 RECORD_SEC = 12                  # [sec]. duration recording audio.
 
 
-
+print("처음 시작시 모델 다운로드 때문에 시간이 걸립니다\n")
 print("한글 번역 시작!\n(12초 딜레이 있습니다)")
 
 start_time = time.time() #start time

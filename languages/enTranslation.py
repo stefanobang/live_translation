@@ -82,7 +82,7 @@ def decode(conn, start_time, inputVer):
 
 
 if __name__ == "__main__":
-    print("Current selected model is: "+ str(inputType))
+    print("During first start, it will take some times to install the model")
     print("Start English Translation!")
     inputVer = inputType #temp
     start_time = time.time() #start time
