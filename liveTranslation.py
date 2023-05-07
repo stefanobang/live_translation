@@ -24,7 +24,7 @@ if __name__ == "__main__":
     mainWin.title("liveTranslation")
 
     label1 = Label(mainWin, text = "아직 한글은 고퀄 번역은 힘들고 빠른 음성인 경우 오류가 매우 큼니다. \n빠른 음성은 영어 번역 사용해주세요")
-    label2 = Label(mainWin, text = "\n영어로 모델 하나 고른뒤 버튼 클릭해주세요")
+    label2 = Label(mainWin, text = "\n영어 모델 하나 고른뒤 버튼 클릭해주세요")
     
 
     inputType = IntVar() #자료형 지정
