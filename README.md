@@ -4,8 +4,9 @@
 
 ## Pre-requirments
  [Whisper](https://github.com/openai/whisper) is required to be installed 
+ ```bash
     pip install -U openai-whisper
-
+```
     
 It also requires the command-line tool [`ffmpeg`](https://ffmpeg.org/) to be installed on your system, which is available from most package managers:
 
@@ -21,6 +22,8 @@ scoop install ffmpeg
     pip install -r requirements.txt
 ```
 
+## Running the app
+Simply run the liveTranslation.exe file
 
-# License
+## License
 This project is licensed under the MIT License 
