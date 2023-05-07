@@ -1,6 +1,17 @@
 <h1>Jump to</h1>
+    
 
 
+## Preview
+<summary>Preview</summary>
+    <p align="center">
+        Menu Screen
+        <img src="https://github.com/stefanobang/live_translation/blob/master/assets/Example1.png" width="700">
+        Example of English Translation
+        <img src="https://github.com/stefanobang/live_translation/blob/master/assets/Example2.png" width="700">
+        Example of Korean Translation
+        <img src="https://github.com/stefanobang/live_translation/blob/master/assets/Example3.png" width="700">
+    </p>
 
 ## Pre-requirments
  [Whisper](https://github.com/openai/whisper) is required to be installed 
