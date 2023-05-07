@@ -14,13 +14,13 @@ It also requires the command-line tool [`ffmpeg`](https://ffmpeg.org/) to be ins
 choco install ffmpeg
 # on Windows using Scoop (https://scoop.sh/)
 scoop install ffmpeg
-
+```
 
 ## Installation
+```bash
     pip install -r requirements.txt
-
+```
 
 
 # License
-
 This project is licensed under the MIT License 
