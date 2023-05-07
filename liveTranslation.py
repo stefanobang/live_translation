@@ -17,6 +17,9 @@ def korean_record():
 if __name__ == "__main__":
     #gui
     mainWin = Tk()
+
+    mainWin.iconbitmap("icon.ico")
+
     mainWin.geometry("400x450")
     mainWin.title("liveTranslation")
 
