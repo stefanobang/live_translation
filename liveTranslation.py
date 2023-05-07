@@ -4,14 +4,14 @@ from tkinter import *
 def enButton():
     value = int(inputType.get())
     str_value = str(value)
-    subprocess.Popen(['start', 'cmd', '/k', 'python enTranslation.py', str_value], shell=True)
+    subprocess.Popen(['start', 'cmd', '/k', 'python .\languages\enTranslation.py', str_value], shell=True)
     # subprocess.Popen(['cmd', '/c', 'start', '/B', 'python', 'enTranslation.py', str_value], creationflags=subprocess.CREATE_NO_WINDOW)
     # cmd = ['python', 'enTranslation.py', str_value]
     # subprocess.Popen(cmd, creationflags=subprocess.CREATE_NO_WINDOW)
     
     
 def korean_record():
-    subprocess.Popen('start cmd /k python koreanTranslation.py', shell=True)
+    subprocess.Popen('start cmd /k python .\languages\koreanTranslation.py', shell=True)
 
 
 if __name__ == "__main__":
