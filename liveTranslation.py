@@ -57,3 +57,7 @@ if __name__ == "__main__":
  
     mainWin.mainloop()
 
+# pyinstaller --onefile --noconsole --clean --icon='icon.ico' --add-data 'icon.ico;.' liveTranslation.py
+# pyinstaller --onefile --add-data "icon.ico;." --icon "icon.ico" liveTranslation.py
+#  pyinstaller --onefile --icon=icon.ico liveTranslation.py
+
