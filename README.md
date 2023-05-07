@@ -7,8 +7,8 @@
     <p align="center">
         Menu Screen
         <img src="https://github.com/stefanobang/live_translation/blob/master/assets/Example1.png" width="400" height="500"> 
-        <img src="https://github.com/stefanobang/live_translation/blob/master/assets/Example2.png" width="400" height="300">
-        <img src="https://github.com/stefanobang/live_translation/blob/master/assets/Example3.png" width="400" height="300">
+        <img src="https://github.com/stefanobang/live_translation/blob/master/assets/Example2.png" width="700" height="300">
+        <img src="https://github.com/stefanobang/live_translation/blob/master/assets/Example3.png" width="700" height="300">
     </p>
 
 ## Pre-requirments
@@ -34,13 +34,6 @@ scoop install ffmpeg
 ## Running the app
 Simply run the liveTranslation.exe file
 
-## Tables
-
-| Left columns  | Right columns |
-| ------------- |:-------------:|
-| left foo      | right foo     |
-| left bar      | right bar     |
-| left baz      | right baz     |
 
 ## License
 This project is licensed under the MIT License 
