@@ -13,50 +13,70 @@ Whisper AI 모델을 이용한 시스템 음성 번역 애플리케이션입니�
         <img src="https://github.com/stefanobang/live_translation/blob/master/assets/Example3.png" width="800" height="400">
     </p>
 
-## Pre-requirments
- [Whisper](https://github.com/openai/whisper) is required to be installed 
- ```bash
-    pip install -U openai-whisper
-```
-    
-It also requires the command-line tool [`ffmpeg`](https://ffmpeg.org/) to be installed on your system, which is available from most package managers:
+## System Requirments
+
+|  Size  | Parameters |  Multilingual model | Required VRAM | Relative speed |
+|:------:|:----------:|:------------------:|:-------------:|:--------------:|
+|  base  |    74 M    |       `base`       |     ~1 GB     |      ~16x      |
+| medium |   769 M    |      `medium`      |     ~5 GB     |      ~2x       |
+| large  |   1550 M   |      `large`       |    ~10 GB     |       1x       |
+
+- For Korean transaltion it utilize 'large' Multilingual model so having at least 10GB of VRAM is recommended
+- 한국어 번역에는 'large' 다국어 모델을 사용하므로 최소 10GB의 VRAM을 권장합니다
+
+## Pre-requirements (사전준비)    
+- Requires the command-line tool [`ffmpeg`](https://ffmpeg.org/) to be installed on your system, which is available from most package managers:
 ```bash
 # on Windows using Chocolatey (https://chocolatey.org/)
 choco install ffmpeg
 # on Windows using Scoop (https://scoop.sh/)
 scoop install ffmpeg
 ```
-
-- Whisper uses vram/gpu to process the audio, so it is recommended to have a CUDA compatible GPU. 
+Englsih:
+- Whisper uses vram/gpu to process the audio, so it is recommended to have a CUDA compatible GPU(NVIDA). 
 - For each model requirement you can check directly at the [whisper repository](https://github.com/openai/whisper) 
 - Must have at least Python 3.9. This project best work for any 3.9 version. 
 - Python version above 3.10.9 might not work. 
 
-## Requirments
+Korean:
+- 명령줄 도구 ['fmpeg'](https://ffmpeg.org/) 를 시스템에 설치해야 합니다. (위에 설치 예시 및 링크 있습니다)
+- Whisper는 vram/gpu를 사용하여 오디오를 처리하므로 CUDA 호환성 있는 GPU를 사용하는 것이 좋습니다. 
+- 각 모델 요구 사항은 [whisper repository](https://github.com/openai/whisper)에서 직접 확인할 수 있습니다
+- Python 3.9 이상이어야 합니다. 이 프로젝트는 모든 3.9 버전에 가장 적합합니다.
+- 3.10.9 이상의 Python 버전은 작동하지 않을 수 있습니다.
+
+
+## Requirements (필수 파일 설치)
 - By running the setup.exe will install all the requirments (if I am correct)
 - If you don`t want to use setup.exe
 
 ```bash
     pip install -r requirements.txt
 ```
+- setup.exe 파일 실행하면 
+- setup.exe 외에 위에 있는 pip으로 설치 가능합니다
 
-
-## Compatibility
+## Compatibility (호환성)
 This project should be compatible with Windows only(tested on 10 & 11). 
 Will add MacOs and Linux suppot in the near future.
 
+이 프로젝트는 Windows 환경에서만 실행이 가능합니다(10 및 11에서 테스트됨)
+추후 업데이트에서 MacOs 및 Linux 지원을 추가할 예정입니다.
 
-## Installation
-1. Donwlaod the Git Files
-2. Run setup.exe (automatically install the libaries and will close when finished)
-3. Run liveTranslation.exe !
+## Installation (설치)
+1. Donwload the Git Files (zip recommended)
+2. Run 'setup.exe' (automatically install the libaries and will close when finished)
+3. Run 'liveTranslation.exe' !
 
+1. Git 파일 다운로드 (zip으로 추천)
+2. 'setup.exe'를 실행합니다(라이브러리를 자동으로 설치하고 완료되면 닫힙니다)
+3. '라이브 번역'을 실행합니다.exe'!
 
-
-## Running the app
+## Running the app (실행)
 Simply run the liveTranslation.exe file
 
-## Future Development and Updates
+liveTranslation.exe 실행하면 됩니다
+## Future Development and Updates (추후 업데이트)
 - Add better translation model for Korean Translation
 - Reduce the transcription time
 - Improve the GUI
@@ -64,3 +84,15 @@ Simply run the liveTranslation.exe file
 
 ## License
 This project is licensed under the MIT License 
+
+All Rights Reserved
+
+Copyright (c) ${project.inceptionYear} ${owner}
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
