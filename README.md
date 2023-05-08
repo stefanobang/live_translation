@@ -57,17 +57,21 @@ Korean:
 - setup.exe 외에 위에 있는 pip으로 설치 가능합니다
 
 ## Compatibility (호환성)
+English:
 This project should be compatible with Windows only(tested on 10 & 11). 
 Will add MacOs and Linux suppot in the near future.
 
+Korean:
 이 프로젝트는 Windows 환경에서만 실행이 가능합니다(10 및 11에서 테스트됨)
 추후 업데이트에서 MacOs 및 Linux 지원을 추가할 예정입니다.
 
 ## Installation (설치)
+English:
 1. Donwload the Git Files (zip recommended)
 2. Run 'setup.exe' (automatically install the libaries and will close when finished)
 3. Run 'liveTranslation.exe' !
 
+한글:
 1. Git 파일 다운로드 (zip으로 추천)
 2. 'setup.exe'를 실행합니다(라이브러리를 자동으로 설치하고 완료되면 닫힙니다)
 3. '라이브 번역'을 실행합니다.exe'!
@@ -88,9 +92,9 @@ This project is licensed under the MIT License
 All Rights Reserved
 
 Copyright (c) 
-THE AUTHOR IS NOT A LAW FIRM AND DOES NOT PROVIDE LEGAL SERVICES.
+THE AUTHOR(@stefanobang) IS NOT A LAW FIRM AND DOES NOT PROVIDE LEGAL SERVICES.
 
-CREATIVE COMMONS MAKES NO WARRANTIES REGARDING THE INFORMATION PROVIDED, AND DISCLAIMS LIABILITY FOR DAMAGES RESULTING FROM ITS USE.
+THE AUTHOR MAKES NO WARRANTIES REGARDING THE INFORMATION PROVIDED, AND DISCLAIMS LIABILITY FOR DAMAGES RESULTING FROM ITS USE.
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
 IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
