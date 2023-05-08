@@ -1,3 +1,9 @@
+import warnings
+from numba import NumbaDeprecationWarning
+warnings.filterwarnings("ignore", category=NumbaDeprecationWarning)
+warnings.filterwarnings("ignore")
+# Only for release version 
+
 import soundcard as sc
 import soundfile as sf
 import whisper
@@ -15,6 +21,7 @@ RECORD_SEC = 12                  # [sec]. duration recording audio.
 
 print("처음 시작시 모델 다운로드 때문에 시간이 걸립니다\n")
 print("한글 번역 시작!\n(12초 딜레이 있습니다)")
+print("현재 한글 번역기는 최소 10GB VRAM 있어야지 원활한 번역이 가능합니다")
 
 start_time = time.time() #start time
 

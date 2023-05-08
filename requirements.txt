@@ -1,5 +1,7 @@
 openai_whisper==20230314
 SoundCard==0.4.2
 soundfile==0.12.1
+torch
 soundcard
 tk
+numba

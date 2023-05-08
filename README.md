@@ -48,7 +48,7 @@ Will add MacOs and Linux suppot in the near future.
 
 ## Installation
 1. Donwlaod the Git Files
-2. Run setup.exe (should Downlaod all the requirements to run the program)
+2. Run setup.exe (automatically install the libaries and will close when finished)
 3. Run liveTranslation.exe !
 
 

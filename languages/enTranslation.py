@@ -1,3 +1,9 @@
+import warnings
+from numba import NumbaDeprecationWarning
+warnings.filterwarnings("ignore", category=NumbaDeprecationWarning)
+warnings.filterwarnings("ignore")
+# Only for release version 
+
 import soundcard as sc
 import soundfile as sf
 import whisper
@@ -6,6 +12,9 @@ import multiprocessing as mp
 import sys 
 import re
 from os import system
+
+
+
 
 name = "English Translation"
 system("title "+name)
@@ -81,10 +90,18 @@ def decode(conn, start_time, inputVer):
         print("interrupted")
 
 
-if __name__ == "__main__":
-    print("During first start, it will take some times to install the model")
-    print("Start English Translation!")
+if __name__ == "__main__":       
     inputVer = inputType #temp
+    if(inputVer == 0):
+        print("Current Model is 'Base' and recommended for 8GB VRAM or less.")
+    elif(inputVer == 1):
+        print("Current Model is 'Medium' and above 8GB VRAM.")
+    elif(inputVer == 2):
+        print("Current Model is 'Large' and above 10GB VRAM.")
+
+    
+    print("During first start, it will take some times to install the model.....")
+    print("Start English Translation!")
     start_time = time.time() #start time
 
     to_record, to_decode = mp.Pipe()
