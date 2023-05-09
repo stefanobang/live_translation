@@ -9,6 +9,7 @@ import soundfile as sf
 import whisper
 import time
 import re
+import textwrap
 from os import system
 
 from PIL import Image
@@ -22,6 +23,78 @@ system("title "+name)
 OUTPUT_FILE_NAME = "out.wav"    # file name.
 SAMPLE_RATE = 48000              # [Hz]. sampling rate.
 RECORD_SEC = 12                  # [sec]. duration recording audio.
+
+
+def wrap_text(text):
+    lines = []
+    words = text.split()
+    current_line = words[0]
+    for word in words[1:]:
+        if len(current_line) + len(word) + 1 <= 49:
+            current_line += ' ' + word
+        else:
+            lines.append(current_line)
+            current_line = word
+    lines.append(current_line)
+    return '\n'.join(lines)
+
+def add_linebreaks(text):
+    # Add double periods, exclamations, and question marks to avoid conflicting with sentence splits
+    text = re.sub(r"\.", "..", text)
+    text = re.sub(r"\!", "!!", text)
+    text = re.sub(r"\?", "??", text)
+    
+    # Split the text by ". " and "? ", ignoring "!" since it can be part of a sentence
+    sentences = re.split(r'\. |\? |\! ', text)
+    new_sentences = []
+    tempText = 0
+    for sentence in sentences:
+        # prevent last word duplicate stuff
+        sentence = sentence.replace('..', '.')
+        sentence = sentence.replace('!!', '!')
+        sentence = sentence.replace('??', '?')
+
+        words = sentence.split()    
+        if len(words) < 5:
+            tempText += len(words)
+            
+            if(tempText>4):
+                if '.' in sentence:
+                    sentence = sentence.replace('.', '.\n')
+                if '?' in sentence:
+                    sentence = sentence.replace('?', '?\n')
+                if '!' in sentence:
+                    sentence = sentence.replace('!', '!\n')
+                tempText = 0
+                new_sentences.append(sentence)
+
+            else:
+                new_sentences.append(sentence)
+
+        else:
+            if '.' in sentence:
+                sentence = sentence.replace('.', '.\n')
+            if '?' in sentence:
+                sentence = sentence.replace('?', '?\n')
+            if '!' in sentence:
+                sentence = sentence.replace('!', '!\n')
+
+            new_sentences.append(sentence)
+            
+    
+    # Join the sentences back together
+    new_text = ' '.join(new_sentences)
+
+    # Remove double periods, exclamations, and question marks
+    new_text = re.sub(r"\.\.", ".", new_text)
+    new_text = re.sub(r"\!\!", "!", new_text)
+    new_text = re.sub(r"\?\?", "?", new_text)
+
+
+    return new_text
+
+
+
 
 
 print("처음 시작시 모델 다운로드 때문에 시간이 걸립니다\n")
@@ -59,17 +132,55 @@ while True:
                 continue
 
             end_time = time.time() #time ends
+            
+            # print("original:\n" + translated_result.text)
+            
+            new_translated_result = add_linebreaks(translated_result.text)
 
-            new_translated_result = re.sub(r"\.", ".\n", translated_result.text)
-            new_translated_result = re.sub(r"\!", "!\n", new_translated_result)
-            new_translated_result = re.sub(r"\?", "?\n", new_translated_result)
-                                           
+            # fix the Repeating words or text
+            # Use regex to replace consecutive repeating words that occur more than three times with a single instance of that word
+            pattern = re.compile(r'\b(\w+)\s+(\1\s+){3,}')
+            new_translated_result = pattern.sub(r'\1 ', new_translated_result)
+
+            # Use regex to replace consecutive repeating words that occur more than five times with three instances of that word
+            pattern = re.compile(r'\b(\w+)\s+(\1\s+){4,}')
+            new_translated_result = pattern.sub(r'\1 \1 \1 ', new_translated_result)
+
+
+            # Use regex to replace consecutive repeating characters, except for 'ㅋ' that repeats more than 6 times, with a single instance
+            # pattern = re.compile(r'(\w)\1{5,}')
+            # new_translated_result = pattern.sub(r'\1', new_translated_result)
+
+            new_translated_result = re.sub(r'(.)\1{5,}', r'\1'*6, new_translated_result)
+    
+            # Replace the 6 'ㅋ' characters with just one 'ㅋ'
+            new_translated_result = re.sub(r'ㅋ{6}', 'ㅋㅋㅋㅋㅋㅋㅋ', new_translated_result)
+
+            #Line breaks 
+            new_translated_result = new_translated_result.replace("..", ".")
+            
+            # new_translated_result = add_linebreaks(new_translated_result)
+
+
+            new_translated_result = new_translated_result.replace("\n\n", "\n")
+            new_translated_result = new_translated_result.replace(".\n.", ".")
+            new_translated_result = new_translated_result.replace(".\n.", ".")
+            new_translated_result = new_translated_result.replace("..", ".")
+
+            # print("Before wrap\n"+new_translated_result)
+
+            # new_translated_result = wrap_text(new_translated_result)
+
             print(f"Decode time: {round(end_time - prevent_spamTime,3)} secs")
             print(f"Time : {round(end_time - start_time,3)}sec ") #prints total time
             print("번역문: \n"+new_translated_result)
             print("----------------------------------\n")
             # new_text = translated_result.text + "\n"
             # trans_textbox.insert(new_text)
+    
+
+         
+
 
             # Open the image
             image = Image.open("./overlay/textImage_700X600.png")
@@ -99,3 +210,5 @@ while True:
     except Exception as e:
         print(f"Error: {str(e)}. Redoing the loop...")
         continue
+
+

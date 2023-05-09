@@ -25,6 +25,63 @@ system("title "+name)
 value_str = sys.argv[1]
 inputType = int(value_str)
 
+def add_linebreaks(text):
+    # Add double periods, exclamations, and question marks to avoid conflicting with sentence splits
+    text = re.sub(r"\.", "..", text)
+    text = re.sub(r"\!", "!!", text)
+    text = re.sub(r"\?", "??", text)
+    
+    # Split the text by ". " and "? ", ignoring "!" since it can be part of a sentence
+    sentences = re.split(r'\. |\? |\! ', text)
+    new_sentences = []
+    tempText = 0
+    for sentence in sentences:
+        # prevent last word duplicate stuff
+        sentence = sentence.replace('..', '.')
+        sentence = sentence.replace('!!', '!')
+        sentence = sentence.replace('??', '?')
+
+        words = sentence.split()    
+        if len(words) < 5:
+            tempText += len(words)
+            
+            if(tempText>4):
+                if '.' in sentence:
+                    sentence = sentence.replace('.', '.\n')
+                if '?' in sentence:
+                    sentence = sentence.replace('?', '?\n')
+                if '!' in sentence:
+                    sentence = sentence.replace('!', '!\n')
+                tempText = 0
+                new_sentences.append(sentence)
+
+            else:
+                new_sentences.append(sentence)
+
+        else:
+            if '.' in sentence:
+                sentence = sentence.replace('.', '.\n')
+            if '?' in sentence:
+                sentence = sentence.replace('?', '?\n')
+            if '!' in sentence:
+                sentence = sentence.replace('!', '!\n')
+
+            new_sentences.append(sentence)
+            
+    
+    # Join the sentences back together
+    new_text = ' '.join(new_sentences)
+
+    # Remove double periods, exclamations, and question marks
+    new_text = re.sub(r"\.\.", ".", new_text)
+    new_text = re.sub(r"\!\!", "!", new_text)
+    new_text = re.sub(r"\?\?", "?", new_text)
+
+
+    return new_text
+
+
+
 #system sound capture
 def record(conn):
     OUTPUT_FILE_NAME = "out.wav"    # file name.
@@ -71,26 +128,45 @@ def decode(conn, start_time, inputVer):
             audio = whisper.pad_or_trim(audio)
 
             mel = whisper.log_mel_spectrogram(audio).to(model.device)
-            # options = whisper.DecodingOptions(language= 'Korean', fp16=False)
             options = whisper.DecodingOptions(language= 'en', fp16=False)
             translated_result = whisper.decode(model, mel, options)
 
-            # #to prevent spamming random text every 5 seconds
-            # if(len(translated_result.text) <= 10):
-            #     continue
+
 
             end_time = time.time() #time ends
             #prevent spamming short text or short decode time
             if(end_time - prevent_spamTime <= 0.15 or len(translated_result.text)<=5):
                 continue
 
-            new_translated_result = re.sub(r"\.", ".\n", translated_result.text)
-            new_translated_result = re.sub(r"\!", "!\n", new_translated_result)
-            new_translated_result = re.sub(r"\?", "?\n", new_translated_result)
+            new_translated_result = add_linebreaks(translated_result.text)
+
+            # fix the Repeating words or text
+            # Use regex to replace consecutive repeating words that occur more than three times with a single instance of that word
+            pattern = re.compile(r'\b(\w+)\s+(\1\s+){3,}')
+            new_translated_result = pattern.sub(r'\1 ', new_translated_result)
+
+            # Use regex to replace consecutive repeating words that occur more than five times with three instances of that word
+            pattern = re.compile(r'\b(\w+)\s+(\1\s+){4,}')
+            new_translated_result = pattern.sub(r'\1 \1 \1 ', new_translated_result)
+
+
+            new_translated_result = re.sub(r'(.)\1{5,}', r'\1'*6, new_translated_result)
+    
+
+            #Line breaks 
+            new_translated_result = new_translated_result.replace("..", ".")
+            new_translated_result = new_translated_result.replace("\n\n", "\n")
+            new_translated_result = new_translated_result.replace(".\n.", ".")
+            new_translated_result = new_translated_result.replace(".\n.", ".")
+            new_translated_result = new_translated_result.replace("..", ".")
+
+
             print(f"Decode time: {round(end_time - prevent_spamTime,3)} secs")
             print(f"Time : {round(end_time - start_time,3)}sec ") #prints total time
             print("번역문: \n"+new_translated_result)
             print("----------------------------------\n")
+
+
 
             # Open the image
             image = Image.open("./overlay/textImage_700X600.png")
