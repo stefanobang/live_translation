@@ -30,8 +30,8 @@ print("현재 한글 번역기는 최소 10GB VRAM 있어야지 원활한 번역
 
 start_time = time.time() #start time
 
-# model = whisper.load_model("large") #한글 번역은 large 이하면 번역 기대하면 안됌
-model = whisper.load_model("base") #temp
+model = whisper.load_model("large") #한글 번역은 large 이하면 번역 기대하면 안됌
+# model = whisper.load_model("base") #temp
 
 while True:
     try:
