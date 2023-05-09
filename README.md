@@ -76,7 +76,7 @@ English:
 한글:
 1. Git 파일 다운로드 (zip으로 추천)
 2. 'setup.exe'를 실행합니다(라이브러리를 자동으로 설치하고 완료되면 닫힙니다)
-3. '라이브 번역'을 실행합니다.exe'!
+3. 'liveTranslation.exe'을 실행합니다!
 
 ## Usage (실행)
 English:
