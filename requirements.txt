@@ -4,4 +4,4 @@ soundfile==0.12.1
 torch
 tk
 numba
-
+tkinter
