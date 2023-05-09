@@ -8,8 +8,9 @@ import soundcard as sc
 import soundfile as sf
 import whisper
 import time
+import multiprocessing as mp
+import sys 
 import re
-import textwrap
 from os import system
 
 from PIL import Image
@@ -17,26 +18,12 @@ from PIL import ImageDraw
 from PIL import ImageFont
 
 
+
 name = "Korean Translation"
 system("title "+name)
 
-OUTPUT_FILE_NAME = "out.wav"    # file name.
-SAMPLE_RATE = 48000              # [Hz]. sampling rate.
-RECORD_SEC = 12                  # [sec]. duration recording audio.
-
-
-def wrap_text(text):
-    lines = []
-    words = text.split()
-    current_line = words[0]
-    for word in words[1:]:
-        if len(current_line) + len(word) + 1 <= 49:
-            current_line += ' ' + word
-        else:
-            lines.append(current_line)
-            current_line = word
-    lines.append(current_line)
-    return '\n'.join(lines)
+value_str = sys.argv[1]
+inputType = int(value_str)
 
 def add_linebreaks(text):
     # Add double periods, exclamations, and question marks to avoid conflicting with sentence splits
@@ -95,28 +82,48 @@ def add_linebreaks(text):
 
 
 
+#system sound capture
+def record(conn):
+    OUTPUT_FILE_NAME = "out.wav"    # file name.
+    SAMPLE_RATE = 96000              # [Hz]. sampling rate.
+    RECORD_SEC = 12                  # [sec]. duration recording audio.
 
-
-print("처음 시작시 모델 다운로드 때문에 시간이 걸립니다\n")
-print("한글 번역 시작!\n(12초 딜레이 있습니다)")
-print("현재 한글 번역기는 최소 10GB VRAM 있어야지 원활한 번역이 가능합니다")
-
-start_time = time.time() #start time
-
-model = whisper.load_model("large") #한글 번역은 large 이하면 번역 기대하면 안됌
-# model = whisper.load_model("base") #temp
-
-while True:
     try:
-        with sc.get_microphone(id=str(sc.default_speaker().name), include_loopback=True).recorder(samplerate=SAMPLE_RATE) as mic:
-            # record audio with loopback from default speaker.
-            data = mic.record(numframes=SAMPLE_RATE*RECORD_SEC)
+        while True:
+            with sc.get_microphone(id=str(sc.default_speaker().name), include_loopback=True).recorder(samplerate=SAMPLE_RATE) as mic:
+                currentState = False
+                conn.send(currentState)
 
-            # change "data=data[:, 0]" to "data=data", if you would like to write audio as multiple-channels.
-            sf.write(file=OUTPUT_FILE_NAME, data=data[:, 0], samplerate=SAMPLE_RATE)
+                # record audio with loopback from default speaker.
+                data = mic.record(numframes=SAMPLE_RATE*RECORD_SEC)
+                
+                # change "data=data[:, 0]" to "data=data", if you would like to write audio as multiple-channels.
+                sf.write(file=OUTPUT_FILE_NAME, data=data[:, 0], samplerate=SAMPLE_RATE)
 
+
+                currentState = True
+                conn.send(currentState)
+
+    except KeyboardInterrupt:
+        print("interrupted")
+    
+def decode(conn, start_time, inputVer):
+    
+    while True:
+        try:
+            model = whisper.load_model("base")
+            if(inputVer == 0):
+                model = whisper.load_model("base")
+            elif(inputVer == 1):
+                model = whisper.load_model("medium")
+            elif(inputVer == 2):
+                model = whisper.load_model("large")
+
+            while True:
+                currentState = conn.recv()
+                if currentState:
+                    break
             prevent_spamTime = time.time() #start time
-
             audio = whisper.load_audio("out.wav")
             audio = whisper.pad_or_trim(audio)
 
@@ -177,9 +184,6 @@ while True:
             print("----------------------------------\n")
             # new_text = translated_result.text + "\n"
             # trans_textbox.insert(new_text)
-    
-
-         
 
 
             # Open the image
@@ -207,8 +211,32 @@ while True:
             # Save the image with the text overlay
             image.save("./overlay/transcribedImage1.png")
 
-    except Exception as e:
-        print(f"Error: {str(e)}. Redoing the loop...")
-        continue
+        except Exception as e:
+            print(f"Error: {str(e)}. Redoing the loop...")
+            continue
+                
 
 
+if __name__ == "__main__":       
+    inputVer = inputType #temp
+    if(inputVer == 0):
+        print("Current Model is 'Base' and recommended for 8GB VRAM or less.")
+    elif(inputVer == 1):
+        print("Current Model is 'Medium' and above 8GB VRAM.")
+    elif(inputVer == 2):
+        print("Current Model is 'Large' and above 10GB VRAM.")
+
+    
+    print("During first start, it will take some times to install the model.....")
+    print("Start Korean Translation!")
+    start_time = time.time() #start time
+
+    to_record, to_decode = mp.Pipe()
+    record_sound = mp.Process(target=record,args = (to_decode,))
+    decode_audio = mp.Process(target=decode, args = (to_record, start_time, inputVer))
+
+    record_sound.start()
+    decode_audio.start()
+
+    record_sound.join()
+    decode_audio.join()
