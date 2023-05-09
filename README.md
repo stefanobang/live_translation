@@ -22,7 +22,7 @@ Whisper AI 모델을 이용한 시스템 음성 번역 애플리케이션입니�
 | large  |   1550 M   |      `large`       |    ~10 GB     |       1x       |
 
 - For Korean transaltion it utilize 'large' Multilingual model so having at least 10GB of VRAM is recommended
-- 한국어 번역에는 'large' 다국어 모델을 사용하므로 최소 10GB의 VRAM을 권장합니다
+- 한국어 번역에는 'large' 다국어 모델을 사용하므로 최소 10GB의 VRAM을 권장합니다.
 
 ## Pre-requirements (사전준비)    
 - Requires the command-line tool [`ffmpeg`](https://ffmpeg.org/) to be installed on your system, which is available from most package managers:
@@ -37,6 +37,7 @@ Englsih:
 - For each model requirement you can check directly at the [whisper repository](https://github.com/openai/whisper) 
 - Must have at least Python 3.9. This project best work for any 3.9 version. 
 - Python version above 3.10.9 might not work. 
+- For Korean tranlsation you will need malgun.ttf font 
 
 Korean:
 - 명령줄 도구 ['fmpeg'](https://ffmpeg.org/) 를 시스템에 설치해야 합니다. (위에 설치 예시 및 링크 있습니다)
@@ -44,6 +45,7 @@ Korean:
 - 각 모델 요구 사항은 [whisper repository](https://github.com/openai/whisper)에서 직접 확인할 수 있습니다
 - Python 3.9 이상이어야 합니다. 이 프로젝트는 모든 3.9 버전에 가장 적합합니다.
 - 3.10.9 이상의 Python 버전은 작동하지 않을 수 있습니다.
+- 한국어 번역을 위해서는 malgun.ttf (맑은 고딕) 폰트가 필요합니다. 
 
 
 ## Requirements (필수 파일 설치)
@@ -89,7 +91,7 @@ liveTranslation.exe 실행하면 됩니다
 ## License
 This project is licensed under the MIT License 
 
-## TERMS OF SERVICE (서비스 약관)
+## TERMS OF SERVICE (서비스/사용자 약관)
 All Rights Reserved
 Copyright (c)\
 THE AUTHOR(@stefanobang) IS NOT A LAW FIRM AND DOES NOT PROVIDE LEGAL SERVICES.
@@ -97,9 +99,11 @@ THE AUTHOR(@stefanobang) IS NOT A LAW FIRM AND DOES NOT PROVIDE LEGAL SERVICES.
 THE AUTHOR MAKES NO WARRANTIES REGARDING THE INFORMATION PROVIDED, AND DISCLAIMS LIABILITY FOR DAMAGES RESULTING FROM ITS USE. 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED. 
 IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, 
-TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. 
+THE USER IS FULLY Responsible FOR USING THIS SOFTWARE.
+
 
 작성자는 제공된 정보에 대해 어떠한 보증도 하지 않으며, 제공된 정보의 사용으로 인한 손해에 대한 책임도 지지 않습니다.
 소프트웨어는 명시적 또는 묵시적으로 어떠한 종류의 보증도 없이 "있는 그대로" 제공됩니다.
-어떠한 경우에도 저작자 또는 저작권 소유자는 계약의 행위에 관계없이 모든 청구, 손해 또는 기타 책임에 대해 책임을 지지 않습니다,
-소프트웨어 또는 소프트웨어의 사용 또는 기타 거래로 인해 발생하는 불법 행위 또는 기타 행위.
+어떠한 경우에도 저작자 또는 저작권 소유자는  소프트웨어의 사용 또는 기타 거래로 인해 발생하는 불법 행위 또는 기타 행위, 계약의 행위에 관계없이 모든 청구, 손해 또는 기타 책임에 대해 책임을 지지 않습니다. 이 소프트웨어를 사용시 모든 책임은 사용자한테 있습니다.
+

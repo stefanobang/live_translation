@@ -8,3 +8,6 @@ temp
 setup.py
 setup.spec
 liveTranslation copy.py
+liveTranslation.py
+testCode
+hello.py

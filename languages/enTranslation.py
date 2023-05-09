@@ -13,6 +13,9 @@ import sys
 import re
 from os import system
 
+from PIL import Image
+from PIL import ImageDraw
+from PIL import ImageFont
 
 
 
@@ -48,8 +51,9 @@ def record(conn):
         print("interrupted")
     
 def decode(conn, start_time, inputVer):
-    try:
-        while True:
+    
+    while True:
+        try:
             model = whisper.load_model("base")
             if(inputVer == 0):
                 model = whisper.load_model("base")
@@ -81,13 +85,42 @@ def decode(conn, start_time, inputVer):
                 continue
 
             new_translated_result = re.sub(r"\.", ".\n", translated_result.text)
+            new_translated_result = re.sub(r"\!", "!\n", new_translated_result)
+            new_translated_result = re.sub(r"\?", "?\n", new_translated_result)
             print(f"Decode time: {round(end_time - prevent_spamTime,3)} secs")
             print(f"Time : {round(end_time - start_time,3)}sec ") #prints total time
             print("번역문: \n"+new_translated_result)
             print("----------------------------------\n")
+
+            # Open the image
+            image = Image.open("./overlay/textImage_700X600.png")
+
+            # Create a drawing object
+            draw = ImageDraw.Draw(image)
+
+            # Define the font and font size
+            font = ImageFont.truetype("arial.ttf", 15)
+
+            # Define the text to overlay
+            text = str(new_translated_result)
+
+            # Get the size of the text
+            text_size = draw.textsize(text, font)
+
+            # Define the position of the text
+            x = 10  # modified to position text at the left of the image
+            y = 10  # modified to position text at the top of the image
+
+            # Draw the text on the image
+            draw.text((x, y), text, font=font, fill=(255, 255, 255, 255))
+
+            # Save the image with the text overlay
+            image.save("./overlay/transcribedImage1.png")
+
+        except Exception as e:
+            print(f"Error: {str(e)}. Redoing the loop...")
+            continue
                 
-    except KeyboardInterrupt:
-        print("interrupted")
 
 
 if __name__ == "__main__":       
