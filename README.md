@@ -9,6 +9,8 @@ Whisper AI 모델을 이용한 시스템 음성 번역 애플리케이션입니�
 <summary>Preview</summary>
     <p align="center">
         <img src="https://github.com/stefanobang/live_translation/blob/master/assets/Example1.png" width="500" height="500"> 
+        <img src="https://github.com/stefanobang/live_translation/blob/master/assets/Example4.png" width="400" height="400"> 
+        <img src="https://github.com/stefanobang/live_translation/blob/master/assets/Example5.png" width="400" height="400"> 
         <img src="https://github.com/stefanobang/live_translation/blob/master/assets/Example2.png" width="800" height="400">
         <img src="https://github.com/stefanobang/live_translation/blob/master/assets/Example3.png" width="800" height="400">
     </p>
