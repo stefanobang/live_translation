@@ -78,10 +78,23 @@ English:
 2. 'setup.exe'를 실행합니다(라이브러리를 자동으로 설치하고 완료되면 닫힙니다)
 3. '라이브 번역'을 실행합니다.exe'!
 
-## Running the app (실행)
-Simply run the liveTranslation.exe file
+## Usage (실행)
+English:
+1. Simply run the liveTranslation.exe file
+2. Choose the langauge for translation (For EN, choose 'base' or 'medium' or 'large' model then press the button)
+- Please note that bigger the model the output is better!
+- Output time varies depending on computer performance
+3. For overlay, you must initate the translate first and then press the overlay button.
+- If you close the process for the tranlstor, the overlay will not print the tranlated text
 
-liveTranslation.exe 실행하면 됩니다
+한글:
+1. liveTranslation.exe 실행하면 됩니다
+2. 번역할 언어 선택 (영어는  'base' or 'medium' or 'large' 모델 선택 후 버튼 누르기)
+- 모델이 클수록 출력이 우수하다는 점에 유의하시기 바랍니다!
+- - 컴퓨터 성능에 따라 출력시간은 다릅니다
+3. 번역 오버레이의 경우 번역 버튼을 먼저 실행한 뒤 오버레이 버튼을 눌러야 합니다.
+- 번역기 프로세스를 닫으면 오버레이가 번역된 텍스트를 인쇄하지 않습니다
+
 ## Future Development and Updates (추후 업데이트)
 - Add better translation model for Korean Translation
 - Reduce the transcription time
