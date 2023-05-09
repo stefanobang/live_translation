@@ -42,7 +42,7 @@ Englsih:
 - For Korean tranlsation you will need malgun.ttf font 
 
 Korean:
-- 명령줄 도구 ['fmpeg'](https://ffmpeg.org/) 를 시스템에 설치해야 합니다. (위에 설치 예시 및 링크 있습니다)
+- 명령줄 도구 ['ffmpeg'](https://ffmpeg.org/) 를 시스템에 설치해야 합니다. (위에 설치 예시 및 링크 있습니다)
 - Whisper는 vram/gpu를 사용하여 오디오를 처리하므로 CUDA 호환성 있는 GPU를 사용하는 것이 좋습니다. 
 - 각 모델 요구 사항은 [whisper repository](https://github.com/openai/whisper)에서 직접 확인할 수 있습니다
 - Python 3.9 이상이어야 합니다. 이 프로젝트는 모든 3.9 버전에 가장 적합합니다.
@@ -62,12 +62,16 @@ Korean:
 
 ## Compatibility (호환성)
 English:
-This project should be compatible with Windows only(tested on 10 & 11). 
-Will add MacOs and Linux suppot in the near future.
+- This project should be compatible with Windows only(tested on 10 & 11). 
+- Will add MacOs and Linux suppot in the near future.
+- Please note that this project works best on NIVIDA GPU with CUDA
+- Does work on AMD GPU, but can`t expect the same level performance as NVIDA GPU
 
 Korean:
-이 프로젝트는 Windows 환경에서만 실행이 가능합니다(10 및 11에서 테스트됨)
-추후 업데이트에서 MacOs 및 Linux 지원을 추가할 예정입니다.
+- 이 프로젝트는 Windows 환경에서만 실행이 가능합니다(10 및 11에서 테스트됨)
+- 추후 업데이트에서 MacOs 및 Linux 지원을 추가할 예정입니다.
+- 이 프로젝트는 CUDA가 있는 NIVIDA GPU에서 가장 잘 작동합니다
+- AMD GPU에서 작동하지만 NVIDA GPU와 같은 수준의 성능은 기대할 수 없습니다
 
 ## Installation (설치)
 English:
