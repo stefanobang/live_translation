@@ -38,7 +38,7 @@ Englsih:
 - Whisper uses vram/gpu to process the audio, so it is recommended to have a CUDA compatible GPU(NVIDA). 
 - For each model requirement you can check directly at the [whisper repository](https://github.com/openai/whisper) 
 - Must have at least Python 3.9. This project best work for any 3.9 version. 
-- Python version above 3.10.9 might not work. 
+- Python version above 3.9.9 might not work. 
 - For Korean tranlsation you will need malgun.ttf font 
 - Must install tkinter for the usage of overlay
 
@@ -47,7 +47,7 @@ Korean:
 - Whisper는 vram/gpu를 사용하여 오디오를 처리하므로 CUDA 호환성 있는 GPU를 사용하는 것이 좋습니다. 
 - 각 모델 요구 사항은 [whisper repository](https://github.com/openai/whisper)에서 직접 확인할 수 있습니다
 - Python 3.9 이상이어야 합니다. 이 프로젝트는 모든 3.9 버전에 가장 적합합니다.
-- 3.10.9 이상의 Python 버전은 작동하지 않을 수 있습니다.
+- 3.9.9 이상의 Python 버전은 작동하지 않을 수 있습니다.
 - 한국어 번역을 위해서는 malgun.ttf (맑은 고딕) 폰트가 필요합니다.
 - 오버레이를 사용하려면 tkinter를 설치해야 합니다
 
