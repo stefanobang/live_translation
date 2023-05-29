@@ -25,6 +25,44 @@ system("title "+name)
 value_str = sys.argv[1]
 inputType = int(value_str)
 
+# 0.2.0 update
+#_______________________________________________________________________________________________________________________ 
+def remove_repetitive_words(text):
+    words = text.split(", ")
+    unique_words = []
+    for word in words:
+        if word not in unique_words:
+            unique_words.append(word)
+    return ", ".join(unique_words)
+
+def replace_repeated_sentences(text):
+    sentences = text.split("\n")
+    unique_sentences = []
+    for sentence in sentences:
+        if sentence.strip() not in unique_sentences:
+            unique_sentences.append(sentence.strip())
+    return "\n".join(unique_sentences)
+
+# if there are more than 100character is a line will 
+# print the last word before 100character and print the next word in next line
+def add_newline(text):
+    words = text.split()
+    lines = []
+    current_line = ""
+    
+    for word in words:
+        if len(current_line) + len(word) <= 100:
+            current_line += word + " "
+        else:
+            lines.append(current_line.strip())
+            current_line = word + " "
+    
+    if current_line:
+        lines.append(current_line.strip())
+    
+    return "\n".join(lines)
+#_______________________________________________________________________________________________________________________ 
+
 def add_linebreaks(text):
     # Add double periods, exclamations, and question marks to avoid conflicting with sentence splits
     text = re.sub(r"\.", "..", text)
@@ -127,13 +165,27 @@ def decode(conn, start_time, inputVer):
             audio = whisper.load_audio("out.wav")
             audio = whisper.pad_or_trim(audio)
 
+            # ;anguage 를 고정하지 않고 녹음을 했을 때 나오는 '시청해주셔서 감사합니다' 는 
+            # language code 가 ko가 아니라  nn 으로 잡히네요. 이걸로 if 문 걸어서 걸러버리면 되네요
             mel = whisper.log_mel_spectrogram(audio).to(model.device)
             options = whisper.DecodingOptions(language= 'en', fp16=False)
             translated_result = whisper.decode(model, mel, options)
 
+            
+
+            # print(translated_result)
+
+            if translated_result.language_probs is not None:
+                if translated_result.language_probs < 0.2:
+                    continue
+            
+            if translated_result.language_probs is None and translated_result.no_speech_prob>0.4:
+                # print("\n\n\n continued for none")
+                continue
 
 
             end_time = time.time() #time ends
+
             #prevent spamming short text or short decode time
             if(end_time - prevent_spamTime <= 0.15 or len(translated_result.text)<=5):
                 continue
@@ -160,13 +212,20 @@ def decode(conn, start_time, inputVer):
             new_translated_result = new_translated_result.replace(".\n.", ".")
             new_translated_result = new_translated_result.replace("..", ".")
 
+            # prevent repeating sentences or words
+            new_translated_result = replace_repeated_sentences(new_translated_result)
+            new_translated_result = remove_repetitive_words(new_translated_result)
+            # If more than 100 characters will print the rest in new line
+            new_translated_result = add_newline(new_translated_result)
+            
+            
 
             print(f"Decode time: {round(end_time - prevent_spamTime,3)} secs")
             print(f"Time : {round(end_time - start_time,3)}sec ") #prints total time
             print("번역문: \n"+new_translated_result)
             print("----------------------------------\n")
 
-
+            
 
             # Open the image
             image = Image.open("./overlay/textImage_700X600.png")

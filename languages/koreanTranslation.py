@@ -25,6 +25,45 @@ system("title "+name)
 value_str = sys.argv[1]
 inputType = int(value_str)
 
+
+# 0.2.0 update
+#_______________________________________________________________________________________________________________________  
+def remove_repetitive_words(text):
+    words = text.split(", ")
+    unique_words = []
+    for word in words:
+        if word not in unique_words:
+            unique_words.append(word)
+    return ", ".join(unique_words)
+
+def replace_repeated_sentences(text):
+    sentences = text.split("\n")
+    unique_sentences = []
+    for sentence in sentences:
+        if sentence.strip() not in unique_sentences:
+            unique_sentences.append(sentence.strip())
+    return "\n".join(unique_sentences)
+
+# if there are more than 54character is a line will 
+# print the last word before 54character and print the next word in next line
+def add_newline(text):
+    words = text.split()
+    lines = []
+    current_line = ""
+    
+    for word in words:
+        if len(current_line) + len(word) <= 54:
+            current_line += word + " "
+        else:
+            lines.append(current_line.strip())
+            current_line = word + " "
+    
+    if current_line:
+        lines.append(current_line.strip())
+    
+    return "\n".join(lines)
+#_______________________________________________________________________________________________________________________
+
 def add_linebreaks(text):
     # Add double periods, exclamations, and question marks to avoid conflicting with sentence splits
     text = re.sub(r"\.", "..", text)
@@ -131,6 +170,16 @@ def decode(conn, start_time, inputVer):
             options = whisper.DecodingOptions(language= 'Korean', fp16=False)
             translated_result = whisper.decode(model, mel, options)
 
+
+            if translated_result.language_probs is not None:
+                if translated_result.language_probs < 0.2:
+                    continue
+            
+            if translated_result.language_probs is None and translated_result.no_speech_prob>0.4:
+                # print("\n\n\n continued for none")
+                continue
+
+
             end_time = time.time() #time ends
             #prevent spamming short text or short decode time
             if(end_time - prevent_spamTime <= 1.1 or len(translated_result.text)<=5):
@@ -155,9 +204,6 @@ def decode(conn, start_time, inputVer):
 
 
             # Use regex to replace consecutive repeating characters, except for 'ㅋ' that repeats more than 6 times, with a single instance
-            # pattern = re.compile(r'(\w)\1{5,}')
-            # new_translated_result = pattern.sub(r'\1', new_translated_result)
-
             new_translated_result = re.sub(r'(.)\1{5,}', r'\1'*6, new_translated_result)
     
             # Replace the 6 'ㅋ' characters with just one 'ㅋ'
@@ -173,17 +219,19 @@ def decode(conn, start_time, inputVer):
             new_translated_result = new_translated_result.replace(".\n.", ".")
             new_translated_result = new_translated_result.replace(".\n.", ".")
             new_translated_result = new_translated_result.replace("..", ".")
-
-            # print("Before wrap\n"+new_translated_result)
-
-            # new_translated_result = wrap_text(new_translated_result)
+            
+            # prevent repeating sentences or words
+            new_translated_result = replace_repeated_sentences(new_translated_result)
+            new_translated_result = remove_repetitive_words(new_translated_result)
+            # If more than 54 characters will print the rest in new line
+            new_translated_result = add_newline(new_translated_result)
+            
 
             print(f"Decode time: {round(end_time - prevent_spamTime,3)} secs")
             print(f"Time : {round(end_time - start_time,3)}sec ") #prints total time
             print("번역문: \n"+new_translated_result)
             print("----------------------------------\n")
-            # new_text = translated_result.text + "\n"
-            # trans_textbox.insert(new_text)
+
 
 
             # Open the image
